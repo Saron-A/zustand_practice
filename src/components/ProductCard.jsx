@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import useCartStore from "../stores/useCartStore";
 
 const ProductCard = ({ product }) => {
+  const addToCart = useCartStore((state) => state.addToCart);
   return (
     <div key={product.id} className="border-1 border-gray-500 p-4 space-y-2">
       <div className="flex justify-between gap-4">
@@ -16,11 +18,13 @@ const ProductCard = ({ product }) => {
             View Details
           </button>
         </Link>
-        <Link to="/cart">
-          <button className="bg-green-500 px-4 py-2 rounded-4xl border-0 text-white">
-            Add to Cart
-          </button>
-        </Link>
+
+        <button
+          onClick={() => addToCart(product)}
+          className="bg-green-500 px-4 py-2 rounded-4xl border-0 text-white"
+        >
+          Add to Cart
+        </button>
       </div>
     </div>
   );

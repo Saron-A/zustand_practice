@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { fetchProductById } from "../services/productServices";
+import useCartStore from "../stores/useCartStore";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState({});
 
   const { id } = useParams();
+
+  const addToCart = useCartStore((state) => state.addToCart);
 
   useEffect(() => {
     const fetchProductDetail = async () => {
@@ -31,7 +34,10 @@ const ProductDetails = () => {
         <p>${product.price}</p>
       </div>
       <Link to="/cart">
-        <button className="rounded-4xl border-0 px-4 py-2 bg-green-600 text-white font-bold">
+        <button
+          className="rounded-4xl border-0 px-4 py-2 bg-green-600 text-white font-bold"
+          onClick={() => addToCart(product)}
+        >
           Add To Cart
         </button>
       </Link>
