@@ -25,6 +25,12 @@ const Navbar = () => {
         >
           Cart
         </NavLink>
+        <NavLink
+          to="/login"
+          className="font-light text-gray-500 p-2 hover:bg-green-50 transition-all duration-200"
+        >
+          Login
+        </NavLink>
       </div>
     </nav>
   );

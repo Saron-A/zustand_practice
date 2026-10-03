@@ -1,11 +1,6 @@
 const fetchProducts = async () => {
   try {
-    const response = await fetch("https://fakestoreapi.com/products", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch("https://fakestoreapi.com/products");
     // check for response error
     if (!response.ok) {
       throw new Error(`HTTP ERROR: ${response.status}`);

@@ -1,9 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuthStore from "../stores/authStore";
 
 function Login() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
+
+  const login = useAuthStore((state) => state.login);
   //Create a simple login form with Email, Password, and Login button. Use React state. Real authentication is not
   // required for this assignment. Show an appropriate submission message
   const handleSubmit = (e) => {
@@ -28,6 +33,9 @@ function Login() {
     }
     setMessage("Login submitted successfully.");
     console.log("Form Submitted: ", form);
+
+    login(form.email);
+    navigate("/dashboard");
   };
 
   const handleChange = (e) => {
