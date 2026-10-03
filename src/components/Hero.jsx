@@ -11,16 +11,30 @@ const Hero = () => {
   }, [loadProducts]);
 
   const featuredProduct = products[0];
+  const productCategories = [
+    "Men's Clothing",
+    "Women's Clothing",
+    "Jewelry ",
+    "Electronics",
+  ];
   console.log("Featured Product: ", featuredProduct);
 
   return (
-    <div className="flex flex-col justify-center w-full space-y-5">
+    <div className="flex flex-col justify-center w-full gap-10">
       <h1 className="text-center text-3xl font-extrabold">
         Welcome to Mini Shopping cart using Zustand
       </h1>
       <p className="text-center text-sm italic text-gray-500">
         This is a simple project to practice zustand
       </p>
+
+      <div className="flex gap-2 justify-evenly w-full px-4 py-2">
+        {productCategories.map((category) => (
+          <div className="border-1 border-gray-300 p-2">
+            <h3 className="font-semibold">{category}</h3>
+          </div>
+        ))}
+      </div>
 
       <div className="flex justify-around bg-slate-900 ml-8 mr-8 w-fill rounded-4xl border-0 p-4 gap-2">
         <div className="flex flex-col gap-2 self-center">

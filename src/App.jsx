@@ -8,7 +8,7 @@ import Footer from "./components/footer";
 
 function App() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
