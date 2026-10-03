@@ -7,6 +7,11 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/footer";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+//Protected route - restrict who can access routes - gn make sure a user is logged in to access certain routes
+
+// we wrap the routes we want to protect by having the component where we declared the protected route logic as a parent route and the route to be protected as a child route. The parent route will only have the property element leading to the component where the protection logic is defined
 
 function App() {
   return (
@@ -18,7 +23,9 @@ function App() {
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
       </Routes>
       <Footer />
     </div>

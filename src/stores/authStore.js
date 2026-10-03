@@ -7,12 +7,18 @@ import { create } from "zustand";
 
 //Protected route - restrict who can access routes - gn make sure a user is logged in to access certain routes
 
+// we wrap the routes we want to protect by having the component where we declared the protected route logic as a parent route and the route to be protected as a child route
+
 const useAuthStore = create((set) => ({
   user: null,
 
-  login: (email) => set({ id: 1, name: "DemoUser", email }),
+  login: (email) => {
+    set({ user: { id: 1, name: "DemoUser", email } });
+  },
 
-  logout: set({ user: null }),
+  logout: () => {
+    set({ user: null });
+  },
 }));
 
 export default useAuthStore;
