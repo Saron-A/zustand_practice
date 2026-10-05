@@ -6,7 +6,11 @@ const ProductCard = ({ product }) => {
   return (
     <div key={product.id} className="border-1 border-gray-500 p-4 space-y-2">
       <div className="flex justify-between gap-4">
-        <img src={product.image} alt={product.title} className="w-50 h-40" />
+        <img
+          src={product.images[0]}
+          alt={product.title}
+          className="w-50 h-40"
+        />
         <h3 className="self-center font-semibold">{product.title}</h3>
       </div>
 

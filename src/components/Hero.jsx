@@ -54,7 +54,7 @@ const Hero = () => {
         {/* Check that featuredProducts is populated because on initial render it is empty & attributes like src throws err */}
         {featuredProduct && (
           <img
-            src={featuredProduct.image}
+            src={featuredProduct.images[0]}
             alt={featuredProduct.title}
             className="h-80 w-70 bg-white px-4 py-2 rounded-2xl"
           />
