@@ -1,37 +1,45 @@
-import ProductCard from "../components/ProductCard";
-
 import { useEffect } from "react";
+import ProductCard from "../components/ProductCard";
 import useProductStore from "../stores/useProductStore";
 
 const Products = () => {
-  const products = useProductStore((state) => state.products); // empty array
+  const products = useProductStore((state) => state.products);
   const loadProducts = useProductStore((state) => state.loadProducts);
-  //   useEffect(() => {
-  //     const fetchProductList = async () => {
-  //       const data = await fetchProducts();
-  //       setProducts(data);
-  //       console.log(data);
-  //     };
-
-  //     fetchProductList();
-  //   }, [setProducts]);
 
   useEffect(() => {
     loadProducts();
   }, [loadProducts]);
 
-  if (products.length === 0) return <p>Loading Products ...</p>;
-  return (
-    <>
-      <div className="flex-col space-y-10">
-        <h1 className="text-2xl font-bold text-center">Our Products</h1>
-        <div className="grid grid-cols-3 gap-7 p-2">
-          {products.map((product) => (
-            <ProductCard product={product} />
-          ))}
-        </div>
+  if (products.length === 0) {
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <p className="text-sm font-medium text-gray-500">Loading Products...</p>
       </div>
-    </>
+    );
+  }
+
+  return (
+    <main className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mb-10 text-center">
+        <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-green-600">
+          Our Collection
+        </p>
+
+        <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          Our Products
+        </h1>
+
+        <p className="mx-auto mt-3 max-w-xl text-sm text-gray-500">
+          Explore our collection and find something that fits your style.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    </main>
   );
 };
 

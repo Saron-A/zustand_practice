@@ -17,7 +17,7 @@ const fetchProducts = async () => {
 
 const fetchProductById = async (id) => {
   try {
-    const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+    const response = await fetch(`https://dummyjson.com/products/${id}`);
 
     if (!response.ok) {
       throw new Error(`HTTP ERROR: ${response.status}`);
