@@ -1,19 +1,27 @@
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProducts } from "../services/productServices";
 import ProductCard from "../components/ProductCard";
-import useProductStore from "../stores/useProductStore";
 
 const Products = () => {
-  const products = useProductStore((state) => state.products);
-  const loadProducts = useProductStore((state) => state.loadProducts);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  });
 
-  useEffect(() => {
-    loadProducts();
-  }, [loadProducts]);
-
-  if (products.length === 0) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <p className="text-sm font-medium text-gray-500">Loading Products...</p>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <p className="text-sm font-semibold text-red-500">
+          Something Went Wrong.
+        </p>
       </div>
     );
   }
@@ -35,7 +43,7 @@ const Products = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {products.map((product) => (
+        {data?.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

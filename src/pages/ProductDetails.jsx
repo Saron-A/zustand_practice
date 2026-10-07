@@ -1,28 +1,41 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { fetchProductById } from "../services/productServices";
 import useCartStore from "../stores/useCartStore";
 
 const ProductDetails = () => {
-  const [product, setProduct] = useState(null);
-
   const { id } = useParams();
 
   const addToCart = useCartStore((state) => state.addToCart);
 
-  useEffect(() => {
-    const fetchProductDetail = async () => {
-      const data = await fetchProductById(id);
-      setProduct(data);
-    };
+  // useEffect(() => {
+  //   const fetchdataDetail = async () => {
+  //     const data = await fetchdataById(id);
+  //     setdata(data);
+  //   };
 
-    fetchProductDetail();
-  }, [id]);
+  //   fetchdataDetail();
+  // }, [id]);
 
-  if (!product) {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["data", id],
+    queryFn: () => fetchProductById(id),
+  });
+
+  if (isLoading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <p className="text-sm font-medium text-gray-500">Loading product...</p>
+        <p className="text-sm font-medium text-gray-500">Loading Products...</p>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-sm font-semibold text-red-500">
+          Something Went Wrong...
+        </p>
       </div>
     );
   }
@@ -37,13 +50,13 @@ const ProductDetails = () => {
         ← Back to Products
       </Link>
 
-      {/* Product */}
+      {/* data */}
       <section className="mt-8 grid overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm md:grid-cols-2">
         {/* Image */}
         <div className="flex min-h-96 items-center justify-center bg-gray-50 p-8 md:min-h-[550px]">
           <img
-            src={product.images[0]}
-            alt={product.title}
+            src={data.images[0]}
+            alt={data.title}
             className="max-h-[450px] w-full object-contain"
           />
         </div>
@@ -51,38 +64,38 @@ const ProductDetails = () => {
         {/* Details */}
         <div className="flex flex-col justify-center p-6 sm:p-10">
           <p className="text-sm font-semibold uppercase tracking-wider text-green-600">
-            {product.category}
+            {data.category}
           </p>
 
           <h1 className="mt-3 text-2xl font-extrabold leading-tight text-gray-900 sm:text-3xl">
-            {product.title}
+            {data.title}
           </h1>
 
           {/* Rating */}
           <div className="mt-4 flex items-center gap-2">
             <span className="font-semibold text-gray-900">
-              ⭐ {product.rating?.rate}
+              ⭐ {data.rating?.rate}
             </span>
 
             <span className="text-sm text-gray-500">
-              ({product.rating?.count} reviews)
+              ({data.rating?.count} reviews)
             </span>
           </div>
 
           {/* Description */}
           <p className="mt-6 text-sm leading-7 text-gray-600">
-            {product.description}
+            {data.description}
           </p>
 
           {/* Price */}
           <p className="mt-8 text-3xl font-extrabold text-gray-900">
-            ${product.price}
+            ${data.price}
           </p>
 
           {/* Action */}
           <Link
             to="/cart"
-            onClick={() => addToCart(product)}
+            onClick={() => addToCart(data)}
             className="mt-8 w-full rounded-xl bg-green-500 px-6 py-3 text-center font-semibold text-white transition hover:bg-green-600 hover:shadow-lg"
           >
             Add to Cart

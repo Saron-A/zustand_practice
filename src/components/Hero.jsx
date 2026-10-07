@@ -1,16 +1,32 @@
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import useProductStore from "../stores/useProductStore";
+import { fetchProductById } from "../services/productServices";
 
 const Hero = () => {
-  const products = useProductStore((state) => state.products);
-  const loadProducts = useProductStore((state) => state.loadProducts);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["products", 1],
+    queryFn: () => fetchProductById(1),
+  });
 
-  useEffect(() => {
-    loadProducts();
-  }, [loadProducts]);
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <p className="text-sm font-medium text-gray-500">Loading product...</p>
+      </div>
+    );
+  }
 
-  const featuredProduct = products[0];
+  if (isError) {
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <p className="text-sm font-semibold text-red-500">
+          Something went wrong while loading the product.
+        </p>
+      </div>
+    );
+  }
+
+  const featuredProduct = data;
 
   const productCategories = [
     "Men's Clothing",
