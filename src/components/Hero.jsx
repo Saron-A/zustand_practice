@@ -1,30 +1,26 @@
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { fetchProductById } from "../services/productServices";
+import { useProduct } from "../hooks/useProducts";
 
 const Hero = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["products", 7],
-    queryFn: () => fetchProductById(7),
-  });
+  const { data } = useProduct(7);
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <p className="text-sm font-medium text-gray-500">Loading product...</p>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex min-h-[50vh] items-center justify-center">
+  //       <p className="text-sm font-medium text-gray-500">Loading product...</p>
+  //     </div>
+  //   );
+  // }
 
-  if (isError) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <p className="text-sm font-semibold text-red-500">
-          Something went wrong while loading the product.
-        </p>
-      </div>
-    );
-  }
+  // if (isError) {
+  //   return (
+  //     <div className="flex min-h-[50vh] items-center justify-center">
+  //       <p className="text-sm font-semibold text-red-500">
+  //         Something went wrong while loading the product.
+  //       </p>
+  //     </div>
+  //   );
+  // }
 
   const featuredProduct = data;
 

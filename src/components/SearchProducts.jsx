@@ -19,7 +19,6 @@ const SearchProducts = ({ products }) => {
         // value={searchTerm}
         placeholder="Search Product..."
         onChange={(e) => setSearchTerm(e.target.value)}
-        onKey
       />
 
       {/* Filter the products page to display the searched item */}

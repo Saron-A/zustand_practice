@@ -1,6 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
-import { fetchProductById } from "../services/productServices";
+import { useProduct } from "../hooks/useProducts";
 import useCartStore from "../stores/useCartStore";
 
 const ProductDetails = () => {
@@ -8,24 +7,12 @@ const ProductDetails = () => {
 
   const addToCart = useCartStore((state) => state.addToCart);
 
-  // useEffect(() => {
-  //   const fetchdataDetail = async () => {
-  //     const data = await fetchdataById(id);
-  //     setdata(data);
-  //   };
-
-  //   fetchdataDetail();
-  // }, [id]);
-
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["data", id],
-    queryFn: () => fetchProductById(id),
-  });
+  const { data, isLoading, isError } = useProduct(id);
 
   if (isLoading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <p className="text-sm font-medium text-gray-500">Loading Products...</p>
+        <p className="text-sm font-medium text-gray-500">Loading Product...</p>
       </div>
     );
   }

@@ -1,14 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "../services/productServices";
+import { useProducts } from "../hooks/useProducts";
 import ProductCard from "../components/ProductCard";
 import SearchProducts from "../components/SearchProducts";
 import CategoryFilter from "../components/CategoryFilter";
 
 const Products = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["products"],
-    queryFn: fetchProducts,
-  });
+  const { data, isLoading, isError } = useProducts();
 
   if (isLoading) {
     return (
