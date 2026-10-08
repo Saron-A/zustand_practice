@@ -11,7 +11,7 @@ const SearchProducts = ({ products }) => {
   );
 
   return (
-    <div>
+    <div className="border border-gray-500 p-2 rounded-2xl">
       <input
         type="text"
         name="product"
