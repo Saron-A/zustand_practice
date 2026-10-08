@@ -3,8 +3,16 @@ import useCartStore from "../stores/useCartStore";
 
 const Cart = () => {
   const cartItems = useCartStore((state) => state.cartItems);
+  const increaseQuantity = useCartStore((state) => state.increaseQuantity);
+  const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
 
   console.log(`There are ${cartItems.length} item(s) in the cart: `, cartItems);
+
+  const subtotals = cartItems.map((item) => item.price * item.quantity);
+  const finalTotal = subtotals.reduce((acc, current) => {
+    return acc + current;
+  }, 0);
 
   if (cartItems.length === 0) {
     return (
@@ -82,14 +90,50 @@ const Cart = () => {
             </div>
 
             {/* View product */}
-            <Link
+            {/* <Link
               to={`/products/${item.id}`}
               className="rounded-xl border border-gray-300 px-5 py-2.5 text-center text-sm font-semibold text-gray-700 transition hover:border-green-500 hover:bg-green-50 hover:text-green-600"
             >
               View Product
             </Link>
+            increase, decrease and remove from cart functionality */}
+
+            <div className="flex flex-col content-center gap-2 rounded-xl border-1 border-gray-300 h-full py-2.5 px-2">
+              <div className="flex gap-2 justify-center">
+                <button
+                  onClick={() => increaseQuantity(item)}
+                  className="border-0 px-1 bg-green-500 text-white font-extrabold text-2xl"
+                >
+                  +
+                </button>
+                <span>{item.quantity}</span>
+                <button
+                  onClick={() => decreaseQuantity(item)}
+                  className="border-0 px-1 bg-green-500 text-white font-extrabold text-2xl"
+                >
+                  -
+                </button>
+              </div>
+              <div>
+                <button
+                  onClick={() => removeFromCart(item)}
+                  className="py-1.25 px-4 bg-red-500 text-white font-bold rounded-2xl border-0"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
           </div>
         ))}
+
+        {/* Total Price and Checkout */}
+        <div>
+          {/* First we calculate the subtotal of each product i.e price * quantity
+              Then we add all the subtotals together to find the final total price
+              
+              */}
+          <p>Total Price: {finalTotal} </p>
+        </div>
       </div>
     </main>
   );

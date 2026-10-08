@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom";
+import useCartStore from "../stores/useCartStore";
 
 const Navbar = () => {
+  const cartItems = useCartStore((state) => state.cartItems);
+
   const navLinkStyles = ({ isActive }) =>
     `rounded-lg px-3 py-2 text-sm font-medium transition duration-200 ${
       isActive
@@ -33,7 +36,7 @@ const Navbar = () => {
           </NavLink>
 
           <NavLink to="/cart" className={navLinkStyles}>
-            Cart
+            Cart {cartItems.length > 0 && <span>({cartItems.length})</span>}
           </NavLink>
 
           <NavLink to="/login" className={navLinkStyles}>

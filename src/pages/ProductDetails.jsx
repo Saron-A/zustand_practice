@@ -74,11 +74,11 @@ const ProductDetails = () => {
           {/* Rating */}
           <div className="mt-4 flex items-center gap-2">
             <span className="font-semibold text-gray-900">
-              ⭐ {data.rating?.rate}
+              ⭐ {data.rating}
             </span>
 
             <span className="text-sm text-gray-500">
-              ({data.rating?.count} reviews)
+              ({data.reviews?.count} reviews)
             </span>
           </div>
 

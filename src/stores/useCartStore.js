@@ -26,9 +26,40 @@ const useCartStore = create((set) => ({
       return { cartItems: [...state.cartItems, newItem] };
     }),
 
-  //     increaseQuantity: (product) => set((state) => {
-  //       return
-  //   })
+  // each card must display the quantity of the item, have buttons to increase, decrease and remove the item from the cart
+
+  increaseQuantity: (item) =>
+    set((state) => {
+      // why do we need state here? we are updating the current state of the cart
+      return {
+        cartItems: state.cartItems.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem,
+        ),
+      };
+    }),
+
+  decreaseQuantity: (item) =>
+    set((state) => {
+      // make sure if the current quantity is 1, decreasing it means removing it from the cart
+      return {
+        cartItems: state.cartItems.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity - 1 }
+            : cartItem,
+        ),
+      };
+    }),
+
+  removeFromCart: (item) =>
+    set((state) => {
+      return {
+        cartItems: state.cartItems.filter(
+          (cartItem) => cartItem.id !== item.id,
+        ),
+      };
+    }),
 }));
 
 export default useCartStore;
