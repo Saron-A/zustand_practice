@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "../services/productServices";
 import ProductCard from "../components/ProductCard";
+import SearchProducts from "../components/SearchProducts";
 
 const Products = () => {
   const { data, isLoading, isError } = useQuery({
@@ -28,6 +29,7 @@ const Products = () => {
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <SearchProducts products={data} />
       <div className="mb-10 text-center">
         <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-green-600">
           Our Collection

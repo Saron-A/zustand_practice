@@ -4,8 +4,8 @@ import { fetchProductById } from "../services/productServices";
 
 const Hero = () => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["products", 1],
-    queryFn: () => fetchProductById(1),
+    queryKey: ["products", 7],
+    queryFn: () => fetchProductById(7),
   });
 
   if (isLoading) {
@@ -28,12 +28,7 @@ const Hero = () => {
 
   const featuredProduct = data;
 
-  const productCategories = [
-    "Men's Clothing",
-    "Women's Clothing",
-    "Jewelry",
-    "Electronics",
-  ];
+  const productCategories = ["Beauty", "Fragrances", "Furniture", "Groceries"];
 
   return (
     <main className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-4 py-8 sm:px-6 lg:px-8">
